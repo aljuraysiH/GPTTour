@@ -70,9 +70,18 @@ const Chat = () => {
     if (!text.trim()) return;
 
     const query = { role: "user", content: text };
-    mutate(query as any);
+
+    // إضافة الرسالة إلى المحادثة أولاً
     setMessages(prev => [...prev, query]);
     setText("");
+
+    // استخدام setTimeout لضمان تحديث واجهة المستخدم قبل التمرير
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 50);
+
+    // إرسال الرسالة للمعالجة
+    mutate(query as any);
   };
 
   // Helper function to detect if the text is RTL
@@ -124,9 +133,14 @@ const Chat = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Scroll to the bottom whenever messages update
+  // تحسين التمرير عند تحديث الرسائل
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    // تأخير قصير لضمان أن DOM قد تم تحديثه
+    const scrollTimeout = setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+
+    return () => clearTimeout(scrollTimeout);
   }, [messages]);
 
   // Typing indicator component
@@ -183,12 +197,12 @@ const Chat = () => {
           {isPending && <TypingIndicator />}
 
           {/* Invisible element to scroll to */}
-          <div ref={messagesEndRef} />
+          <div ref={messagesEndRef} className="h-1" />
         </div>
       </div>
 
       {/* Input area at bottom - fixed position only on small screens */}
-      <div className="lg:border-t lg:border-base-300 lg:pt-4 lg:static fixed bottom-0 left-0 right-0 border-t border-base-300 pt-4 lg:pb-0 lg:px-0 pb-4 px-4">
+      <div className="lg:border-t lg:border-base-300 lg:pt-4 lg:static fixed bottom-0 left-0 right-0 bg-base-100 border-t border-base-300 pt-4 lg:pb-0 lg:px-0 pb-4 px-4">
         <form onSubmit={handleSubmit} className="flex gap-2">
           <input
             type="text"
