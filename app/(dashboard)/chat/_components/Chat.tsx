@@ -130,7 +130,7 @@ const Chat = () => {
     }
 
     // Scroll to bottom after typing finishes
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
   }, [messages]);
 
   // تحسين التمرير عند تحديث الرسائل
