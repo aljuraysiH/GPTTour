@@ -137,7 +137,7 @@ const Chat = () => {
   useEffect(() => {
     // تأخير قصير لضمان أن DOM قد تم تحديثه
     const scrollTimeout = setTimeout(() => {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
     }, 100);
 
     return () => clearTimeout(scrollTimeout);
