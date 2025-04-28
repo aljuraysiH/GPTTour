@@ -187,7 +187,7 @@ const Chat = () => {
       </div>
 
       {/* Input area at bottom - fixed position only on small screens */}
-      <div className="lg:border-t lg:border-base-300 lg:pt-4 lg:static absolute bottom-0 left-0 right-0 border-t border-base-300 pt-4 lg:pb-0 lg:px-0 pb-0 px-4">
+      <div className="lg:border-t lg:border-base-300 lg:pt-4 lg:static fixed bottom-0 left-0 right-0 border-t border-base-300 pt-4 lg:pb-0 lg:px-0 pb-4 px-4">
         <form onSubmit={handleSubmit} className="flex gap-2">
           <input
             type="text"
