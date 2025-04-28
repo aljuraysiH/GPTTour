@@ -1,9 +1,9 @@
+import { arSA } from "@clerk/localizations";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Providers from "./providers";
-import { arSA } from "@clerk/localizations";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -16,8 +16,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "GPTGenius",
-  description: "GPTGenius: Your AI language companion. Powered by OpenAI, it enhances your conversations, content creation, and more!",
+  title: "TourGPT",
+  description: "TourGPT: المساعد الذكي لرحلاتك. سجل دخول للدردشة مع الذكاء الاصطناعي، استكشف المدن بتفاصيل سياحية مخصصة",
 };
 export default async function RootLayout({
   children,
