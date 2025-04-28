@@ -32,8 +32,15 @@ const Chat = () => {
       return response;
     },
     onSuccess: response => {
-      // This runs after the mutation is marked as successful (isPending becomes false)
-      setMessages(prev => [...prev, response?.message]);
+      // هنا نضيف الرسالة مع حالة الكتابة isTyping مفعلة والمحتوى المعروض فارغ
+      setMessages(prev => [
+        ...prev,
+        {
+          ...response?.message,
+          isTyping: true, // تفعيل حالة الكتابة
+          displayedContent: "", // البدء بمحتوى فارغ
+        },
+      ]);
 
       // Handle token subtraction separately after the UI is updated
       subtractTokens(userId ?? "", response.tokens ?? 0)
@@ -124,7 +131,7 @@ const Chat = () => {
               : msg
           )
         );
-      }, 15); // Adjust typing speed here (lower = faster)
+      }, 15); // سرعة الكتابة - رقم أقل = أسرع
 
       return () => clearTimeout(timeoutId);
     }
@@ -159,8 +166,43 @@ const Chat = () => {
 
   return (
     <div className="flex flex-col h-[calc(100vh-6rem)] relative">
-      {/* Chat messages area with scroll and padding at bottom to prevent messages from being hidden behind input (only on small screens) */}
-      <div className="flex-1 overflow-y-auto mb-4 lg:pb-4 pb-16 pt-4 lg:pt-0">
+      {/* Chat messages area with custom scrollbar styling */}
+      <style jsx global>{`
+        /* للمتصفحات الحديثة (Chrome, Edge, Safari) */
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background-color: rgba(0, 0, 0, 0.2);
+          border-radius: 20px;
+        }
+
+        /* إخفاء شريط التمرير على الأجهزة المحمولة مع الحفاظ على الوظيفة */
+        @media (max-width: 768px) {
+          .custom-scrollbar::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+          }
+
+          /* لمتصفح Firefox */
+          .custom-scrollbar {
+            scrollbar-width: none;
+          }
+        }
+
+        /* لمتصفح Firefox */
+        .custom-scrollbar {
+          scrollbar-width: thin;
+          scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+        }
+      `}</style>
+
+      <div className="flex-1 overflow-y-auto mb-4 lg:pb-4 pb-16 pt-4 lg:pt-0 custom-scrollbar">
         <div className="flex flex-col gap-4 pb-4">
           {messages.map((message, index) => {
             const { role, content } = message;
@@ -181,12 +223,6 @@ const Chat = () => {
                     isUser ? "bg-primary text-primary-content rounded-br-none mr-2" : "bg-base-100 rounded-bl-none"
                   }`}>
                   <p dir={contentIsRTL ? "rtl" : "ltr"}>{displayContent}</p>
-                  {/* Show typing indicator inside the message as dots */}
-                  {role === "assistant" && message.isTyping && (
-                    <div className="mt-2 flex">
-                      <span className="loading loading-dots loading-xs"></span>
-                    </div>
-                  )}
                 </div>
                 {!isUser && <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center self-end mr-2">🤖</div>}
               </div>
@@ -202,7 +238,7 @@ const Chat = () => {
       </div>
 
       {/* Input area at bottom - fixed position only on small screens */}
-      <div className="lg:border-t lg:border-base-300 lg:pt-4 lg:static fixed bottom-0 left-0 right-0 bg-base-100 border-t border-base-300 pt-4 lg:pb-0 lg:px-0 pb-4 px-4">
+      <div className="lg:border-t lg:border-base-300 lg:pt-4 lg:static fixed bottom-0 left-0 right-0 border-t border-base-300 pt-4 lg:pb-0 lg:px-0 pb-4 px-4">
         <form onSubmit={handleSubmit} className="flex gap-2">
           <input
             type="text"
