@@ -146,7 +146,7 @@ const Chat = () => {
   return (
     <div className="flex flex-col h-[calc(100vh-6rem)] relative">
       {/* Chat messages area with scroll and padding at bottom to prevent messages from being hidden behind input (only on small screens) */}
-      <div className="flex-1 overflow-y-auto mb-4 pr-4 lg:pb-4 pb-16">
+      <div className="flex-1 overflow-y-auto mb-4 lg:pb-4 pb-16 pt-4 lg:pt-0">
         <div className="flex flex-col gap-4 pb-4">
           {messages.map((message, index) => {
             const { role, content } = message;
@@ -157,8 +157,10 @@ const Chat = () => {
             const displayContent = role === "assistant" && message.isTyping ? message.displayedContent : content;
 
             return (
-              <div key={index} className={`flex w-full ${isUser ? "justify-end" : "justify-start"}`}>
-                {!isUser && <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">🤖</div>}
+              <div key={index} className={`flex w-full ${isUser ? "justify-start" : "justify-end"}`}>
+                {isUser && (
+                  <div className="w-8 h-8 rounded-full bg-primary-focus text-primary-content flex items-center justify-center self-end">👤</div>
+                )}
 
                 <div
                   className={`max-w-lg 2xl:max-w-4xl p-3 rounded-lg ${
@@ -172,8 +174,7 @@ const Chat = () => {
                     </div>
                   )}
                 </div>
-
-                {isUser && <div className="w-8 h-8 rounded-full bg-primary-focus text-primary-content flex items-center justify-center ml-2">👤</div>}
+                {!isUser && <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center self-end mr-2">🤖</div>}
               </div>
             );
           })}
