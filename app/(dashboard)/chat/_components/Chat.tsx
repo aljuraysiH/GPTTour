@@ -144,9 +144,9 @@ const Chat = () => {
   );
 
   return (
-    <div className="flex flex-col h-[calc(100vh-6rem)]">
-      {/* Chat messages area with scroll */}
-      <div className="flex-1 overflow-y-auto mb-4 pr-4">
+    <div className="flex flex-col h-[calc(100vh-6rem)] relative">
+      {/* Chat messages area with scroll and padding at bottom to prevent messages from being hidden behind input (only on small screens) */}
+      <div className="flex-1 overflow-y-auto mb-4 pr-4 lg:pb-4 pb-16">
         <div className="flex flex-col gap-4 pb-4">
           {messages.map((message, index) => {
             const { role, content } = message;
@@ -186,13 +186,13 @@ const Chat = () => {
         </div>
       </div>
 
-      {/* Input area at bottom */}
-      <div className="border-t border-base-300 pt-4">
+      {/* Input area at bottom - fixed position only on small screens */}
+      <div className="lg:border-t lg:border-base-300 lg:pt-4 lg:static absolute bottom-0 left-0 right-0 border-t border-base-300 pt-4 lg:pb-0 lg:px-0 pb-0 px-4">
         <form onSubmit={handleSubmit} className="flex gap-2">
           <input
             type="text"
             placeholder="اكتب رسالة..."
-            className="flex-1 input input-bordered focus:outline-none focus:border-primar px-2"
+            className="flex-1 input input-bordered focus:outline-none focus:border-primary px-2"
             value={text}
             onChange={e => setText(e.target.value)}
             dir="rtl"
