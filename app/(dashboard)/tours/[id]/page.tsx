@@ -19,7 +19,7 @@ const SingleTourPage = async ({ params }: SingleTourPageProps) => {
   const { data } = await axios(`${url}${tour.cityEn}`);
   const tourImage = data?.results[0]?.urls?.raw;
   return (
-    <div>
+    <div className="mt-4 lg:mt-0">
       <Link href="/tours" className="btn btn-secondary mb-12">
         العودة للرحلات
       </Link>

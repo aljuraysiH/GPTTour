@@ -58,7 +58,7 @@ const NewTour = () => {
   return (
     <>
       <form onSubmit={handleSubmit} className="max-w-2xl">
-        <h2 className="mb-4">ابحث عن وجهتك</h2>
+        <h2 className="mb-4 mt-4 lg:mt-0">ابحث عن وجهتك</h2>
         <div className="join w-full">
           <input type="text" className="input input-bordered join-item w-full" placeholder="المدينة" name="city" required />
           <input type="text" className="input input-bordered join-item w-full" placeholder="الدولة" name="country" required />

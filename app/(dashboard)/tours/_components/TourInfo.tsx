@@ -2,8 +2,6 @@ import { Tour } from "@prisma/client";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const TourInfo = ({ tour }: { tour: Tour }) => {
-  console.log(tour);
-
   const { title, description, stops } = tour;
   return (
     <div className="max-w-2xl">

@@ -1,10 +1,10 @@
 "use client";
 
 import { getAllTours } from "@/utils/action";
+import { useAuth } from "@clerk/nextjs";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import ToursList from "./ToursList";
-import { useAuth } from "@clerk/nextjs";
 const Tours = () => {
   const [searchValue, setSearchValue] = useState("");
   const { userId } = useAuth();
@@ -16,7 +16,7 @@ const Tours = () => {
 
   return (
     <>
-      <form className="max-w-lg mb-12" onSubmit={e => e.preventDefault()}>
+      <form className="max-w-lg mb-12 mt-4 lg:mt-0" onSubmit={e => e.preventDefault()}>
         <div className="join w-full">
           <input
             type="text"

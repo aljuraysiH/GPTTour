@@ -14,6 +14,7 @@ const config: Config = {
   plugins: [require("@tailwindcss/typography"), require("daisyui")],
   daisyui: {
     themes: ["winter", "dracula"],
+    rtl: true,
   },
 };
 export default config;
