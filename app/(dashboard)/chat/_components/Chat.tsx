@@ -77,7 +77,7 @@ const Chat = () => {
 
     // استخدام setTimeout لضمان تحديث واجهة المستخدم قبل التمرير
     setTimeout(() => {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
     }, 50);
 
     // إرسال الرسالة للمعالجة
@@ -145,8 +145,7 @@ const Chat = () => {
 
   // Typing indicator component
   const TypingIndicator = () => (
-    <div className="flex w-full mt-4 mb-2">
-      <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">🤖</div>
+    <div className="flex w-full mt-4 mb-2 justify-end">
       <div className="flex max-w-xs p-3 rounded-lg rounded-bl-none bg-gray-200">
         <div className="flex space-x-1">
           <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></div>
@@ -154,6 +153,7 @@ const Chat = () => {
           <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></div>
         </div>
       </div>
+      <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center mr-2">🤖</div>
     </div>
   );
 
